@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>DAW-Online | sipped.org</title>
+
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+	<meta name="description" content="A simple online DAW for creating music made by sipped">
+ 	<meta name="keywords" content="daw, music, webdev, html, css, javascript, website, online, flstudio, ableton, sipped">
+  	<meta name="author" content="sippedaway">
+  	<meta name="robots" content="index, follow">
+
+  	<meta property="og:title" content="DAW-Online">
+  	<meta property="og:description" content="A simple online DAW for creating music made by sipped">
+  	<meta property="og:url" content="https://daw.sipped.org">
+  	<meta property="og:type" content="website">
+  	<meta property="og:site_name" content="DAW-Online">
+  	<meta property="og:locale" content="en_US">
+
+	<link rel="icon" href="./assets/favicon.png" type="image/png">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+	<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+	<nav id="navbar">
+		<div class="menu">
+			<button id="fileMenuButton"><i class="fas fa-file"></i> File</button>
+			<div id="fileMenu" class="dropdown">
+				<button id="openFileBtn"><i class="fas fa-folder-open"></i> Open File</button>
+				<button id="downloadProjectBtn"><i class="fas fa-download"></i> Download Project</button>
+				<button id="resetProjectBtn"><i class="fas fa-redo"></i> Reset Project</button>
+				<hr>
+				<button id="exportMP3Btn"><i class="fas fa-file-audio"></i> Export as .mp3</button>
+				<button id="exportWAVBtn"><i class="fas fa-file-audio"></i> Export as .wav</button>
+			</div>
+		</div>
+		<button id="docsButton"><i class="fas fa-book"></i> Docs</button>
+		<div class="nav-ss">
+			<span id="autosaveStatus">Autosaved</span>
+		</div>
+	</nav>
+
+
+	<div id="featuresBar">
+		<div class="fb-left">
+			<div class="fb-bpm">
+				<label id="bpmLabel" for="bpm-input">BPM:</label>
+				<input type="number" id="bpmInput" min="30" max="300" value="60">
+			</div>
+		</div>
+		<div class="fb-center">
+			<button id="playButton"><i class="fas fa-play"></i></button>
+			<button id="stopButton"><i class="fas fa-stop"></i></button>
+			<span id="tracklistLength">00:00:00</span>
+		</div>
+		<div class="fb-visualizer">
+			<canvas id="visualizer"></canvas>
+		</div>
+	</div>
+
+
+	<div id="mainContent">
+
+		<div id="patternsPanel">
+			<button id="newPatternBtn"><i class="fas fa-plus"></i> New Pattern</button>
+			<div id="patternsList">
+
+			</div>
+		</div>
+
+
+		<div id="timelinePanel">
+			<div id="timelineContainer" style="position: relative;">
+				<div id="timelineMarkers" style="position: relative;"></div>
+				<div id="timeline" style="position: relative; overflow-x: scroll;"></div>
+			  </div>
+
+			<div id="playhead"></div>
+		</div>
+	</div>
+
+	<div id="errorPopup" class="error-modal">
+		<div class="error-content">
+			<span class="close-error">&times;</span>
+			<h2>Error</h2>
+			<p id="errormessage">Something went wrong. Please try again.</p>
+		</div>
+	</div>
+
+	<div id="selectionPopup" class="error-modal" style="z-index: 10000;">
+		<div id="sp-content" class="error-content">
+			<span id="sp-close" class="close-error">&times;</span>
+			<h2>Are you sure?</h2>
+			<p id="sp-text"></p>
+		</div>
+	</div>
+
+	<div id="patternPopup" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<h2>Design Pattern</h2>
+
+			<div class="pattern-controls">
+				<label>
+					Name: <input type="text" id="patternNameInput">
+				</label>
+				<label>
+					Volume: <input type="range" id="volumeSlider" min="0" max="1" step="0.01">
+				</label>
+				<div class="pp-buttoncontainer">
+					<button id="removePatternBtn"><i class="fas fa-trash"></i> Remove</button>
+					<button id="pianoRollEditorBtn"><i class="fas fa-keyboard"></i> Piano Roll</button>
+				</div>
+			</div>
+			<hr>
+
+			<div class="popup-container">
+				<div class="popup-menu">
+					<ul>
+						<li data-category="Drums">Drums</li>
+						<li data-category="Piano">Piano</li>
+						<li data-category="Synths">Synths</li>
+						<li data-category="Bass">Bass</li>
+						<li data-category="Custom">Custom</li>
+						<li data-category="More">More...</li>
+					</ul>
+				</div>
+				<div class="popup-content">
+
+				</div>
+			</div>
+			<button id="savePatternBtn"><i class="fas fa-save"></i> Save Pattern</button>
+		</div>
+	</div>
+
+	<div id="pianoRollPopup" class="modal">
+		<div class="modal-content" style="max-width: 1200px;">
+		  <span id="closePianoRoll" class="close">&times;</span>
+		  <h2>Piano Roll Editor</h2>
+		  <div id="pianoRollWrapper">
+			<div id="pianoRollTimeMarkers"></div>
+			<div id="pianoRollMain">
+			  <div id="pianoRollNotes"></div>
+			  <div id="pianoRollContainer"></div>
+			</div>
+		  </div>
+		  <button id="savePianoRollBtn" class="spr-btn"><i class="fas fa-save"></i> Save Piano Roll</button>
+		</div>
+	  </div>
+
+	<input type="file" id="customFileInput" accept="audio/mp3" style="display:none" />
+
+	<script src="playback.js"></script>
+	<script src="project.js"></script>
+	<script src="ui.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.0/lame.min.js"></script>
+</body>
+
+</html>
