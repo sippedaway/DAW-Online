@@ -9,7 +9,7 @@
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K31AMKAQ)
 
 # [DAW-Online](https://daw.sipped.org)
-A side project of mine - an online Digital Audio Workstation (DAW), or more known as "an app you make music in" - with a pattern system, exporting and more. Inspired by FL Studio and just something I did instead of studying for my math exam. I'll update you if I pass it :)
+A side project of mine - an online Digital Audio Workstation (DAW), or more known as "an app you make music in" - with a pattern system, exporting and more. Inspired by FL Studio and just something I did instead of studying for my math exam. I'll update you if I pass it :) **Update:** math exam passed 60% yay
 
 [<kbd> <br> daw.sipped.org <br> </kbd>](https://daw.sipped.org)
 
